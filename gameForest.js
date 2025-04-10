@@ -278,4 +278,12 @@ player.showStatus();
     alert("You see the castle gates. You made it...");
     player.showStatus();
   }
+
+  alert("You approach the castle and decide to enter...");
+
+// Dynamically load castle.js
+const script = document.createElement("script");
+script.src = "castle.js";
+document.body.appendChild(script);
+
   
