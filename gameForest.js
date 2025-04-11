@@ -288,7 +288,9 @@ player.showStatus();
 
 // Dynamically load castle.js
 const script = document.createElement("script");
-script.src = "castle.js";
+script.src = "castle.js"; // Adjust the path as needed
 document.body.appendChild(script);
-
-  
+script.onload = () => {
+  alert("Castle script loaded successfully.");
+  // You can now call functions from castle.js if needed
+};
