@@ -10,7 +10,6 @@ class Player {
       this.waterItems = []
   
     }
-
     isDead() {
         return this.health <= 0 || this.hunger >= 100 || this.thirst >= 100;
       }
@@ -40,7 +39,7 @@ class Player {
         this.hunger -= item.hungerRestore;
         this.thirst -= item.thirstRestore || 0;
         alert(`You ate ${item.name}. Hunger -${item.hungerRestore}, Thirst -${item.thirstRestore || 0}`);
-        this.foodItems.splice(index, 1); // удалить съеденное
+        this.foodItems.splice(index, 1); 
       }
       drink(index) {
         const item = this.waterItems[index];
@@ -107,10 +106,14 @@ while (true) {
 }
 
 if (openBox === "yes") {
-  alert("You open the box and find some bread and a bottle of water.");
+  alert("You open the box and find some  and a bottle of water.");
   player.foodItems.push({ name: "Bread", hungerRestore: 25 });
-player.waterItems.push({ name: "Water Bottle", thirstRestore: 25 });
-alert("You put Bread and Water Bottle into your inventory.");
+  player.foodItems.push({ name: "Burger", hungerRestore: 25 });
+  player.foodItems.push({ name: "Potato", hungerRestore: 25 });
+  player.waterItems.push({ name: "Water Bottle", thirstRestore: 25 });
+  player.waterItems.push({ name: "Cola Bottle", thirstRestore: 15 });
+  player.waterItems.push({ name: "Water Bottle", thirstRestore: 25 });
+  alert("You put Bread and Water Bottle into your inventory.");
 
 } else {
   player.hunger += 20;
@@ -241,30 +244,31 @@ if (bearChoice === "shout") {
 player.showStatus();
 
   // 🍽️ Optional: Food choice if player has food
-  if ((player.foodItems.length > 0 || player.waterItems.length > 0) && player.health > 0) {
+  while ((player.foodItems.length > 0 || player.waterItems.length > 0) && player.health > 0) {
     alert("You stop to rest near the castle gates. You have some food and drink left.");
     player.showStatus();
   
     let action;
     while (true) {
-      action = prompt("Do you want to eat or drink? (eat / drink / skip)").toLowerCase();
+      action = prompt("Do you want to eat or drink? (eat / drink / skip) ").toLowerCase();
       if (["eat", "drink", "skip"].includes(action)) break;
       alert("Please choose: eat / drink / skip.");
     }
   
     if (action === "eat" && player.foodItems.length > 0) {
       const itemList = player.foodItems.map((f, i) => `${i + 1}: ${f.name} (-${f.hungerRestore} hunger)`).join("\n");
-      const foodIndex = parseInt(prompt("Choose what to eat:\n" + itemList)) - 1;
+      const foodIndex = parseInt(prompt("Choose number what to eat:\n" + itemList)) - 1;
       player.eat(foodIndex);
     }
   
     if (action === "drink" && player.waterItems.length > 0) {
       const drinkList = player.waterItems.map((w, i) => `${i + 1}: ${w.name} (-${w.thirstRestore} thirst)`).join("\n");
-      const drinkIndex = parseInt(prompt("Choose what to drink:\n" + drinkList)) - 1;
+      const drinkIndex = parseInt(prompt("Choose number  what to drink:\n" + drinkList)) - 1;
       player.drink(drinkIndex);
     }
   
     player.showStatus();
+    if (action === "skip") break;
   }
   
   
@@ -282,10 +286,11 @@ player.showStatus();
 
   alert("You approach the castle and decide to enter...");
 
-
 // Dynamically load castle.js
 const script = document.createElement("script");
-script.src = "castle3.js";
+script.src = "castle.js"; // Adjust the path as needed
 document.body.appendChild(script);
-
- 
+script.onload = () => {
+  alert("Castle script loaded successfully.");
+  // You can now call functions from castle.js if needed
+};
